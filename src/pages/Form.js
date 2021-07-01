@@ -1,48 +1,46 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { withRouter } from "react-router";
 import styled from "styled-components";
-import { createWord } from "../redux/modules/word";
-// 액션을가져옴
 import { useDispatch } from "react-redux";
-// 여기선,,함수 노란색 변수 파란색이네...
-// 소괄호 화살표 함수다,,
+import { createWord, addWordFB } from "../redux/modules/word";
+
 const Form = (props) => {
   const dispatch = useDispatch();
-  // const setDict = (data) => {
-  //   const action = createWord(data);
-  //   dispatch(action);
-  // };
-  const wordRef = useRef();
-  const descRef = useRef();
-  const examRef = useRef();
 
-  const handleCreate = () => {
-    const data = {
-      word: wordRef.current.value,
-      desc: descRef.current.value,
-      exam: examRef.current.value,
-    };
-
-    dispatch(createWord(data));
-    props.history.push("/");
-  };
+  const word_ref = useRef(null);
+  const desc_ref = useRef(null);
+  const exam_ref = useRef(null);
 
   return (
     <AddContainer>
       <Title>단어 추가하기</Title>
       <InputWrapper>
         <p>단어</p>
-        <input type="text" ref={wordRef} />
+        <input type="text" ref={word_ref} />
       </InputWrapper>
       <InputWrapper>
         <p>설명</p>
-        <textarea type="text" ref={descRef} />
+        <textarea type="text" ref={desc_ref} />
       </InputWrapper>
       <InputWrapper>
         <p>예시</p>
-        <input type="text" ref={examRef} />
+        <input type="text" ref={exam_ref} />
       </InputWrapper>
-      <AddBtn onClick={handleCreate}>추가하기</AddBtn>
+      <AddBtn
+        onClick={() => {
+          dispatch(
+            addWordFB(
+              word_ref.current.value,
+              desc_ref.current.value,
+              exam_ref.current.value
+            )
+          );
+          window.alert("완료");
+          props.history.replace("/");
+        }}
+      >
+        추가하기
+      </AddBtn>
     </AddContainer>
   );
 };

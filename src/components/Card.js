@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Card = (props) => {
-  const data = props.word;
-  const word = data.word;
-  const desc = data.desc;
-  const exam = data.exam;
+  const word = props.word;
+  const desc = props.desc;
+  const exam = props.exam;
+
   return (
     <CardContainer>
       <DictList>
@@ -33,7 +33,7 @@ const CardContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const DictList = styled.text`
+const DictList = styled.div`
   text-decoration: underline;
   text-align: left;
   font-size: 9px;

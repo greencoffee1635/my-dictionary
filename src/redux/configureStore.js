@@ -1,6 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import word from "./modules/word";
+import { createBrowserHistory } from "history";
+
+export const history = createBrowserHistory();
 
 const middlewares = [thunk];
 

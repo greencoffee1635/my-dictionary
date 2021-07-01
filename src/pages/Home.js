@@ -1,19 +1,31 @@
 import styled from "styled-components";
 import Card from "../components/Card";
 import { withRouter } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { loadWordFB } from "../redux/modules/word";
 
 const Home = (props) => {
   const dict = useSelector((state) => state.word.word_list);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadWordFB());
+  }, []);
+
   return (
     <Container>
       <Title>MY DICTIONARY</Title>
-      <div style={{ position: "relative", height: "80%", overflowY: "scroll" }}>
-        {dict.map((word) => (
-          <Card word={word}></Card>
+      <Overflow>
+        {dict.map((word, index) => (
+          <Card
+            key={index}
+            word={word.word}
+            desc={word.desc}
+            exam={word.exam}
+          ></Card>
         ))}
-      </div>
+      </Overflow>
       <Btn onClick={() => props.history.push("/create")}>
         <span>+</span>
       </Btn>
@@ -30,8 +42,12 @@ const Container = styled.div`
   border-radius: 5px;
   border: 1px solid #ddd;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+`;
+
+const Overflow = styled.div`
+  position: relative;
+  height: 80%;
+  overflow-y: scroll;
 `;
 
 const Title = styled.h1`
